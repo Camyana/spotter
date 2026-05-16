@@ -189,31 +189,33 @@ tasks.withType(JavaCompile).configureEach {
 //   2. Export your token from https://legacy.curseforge.com/account/api-tokens as
 //      CURSEFORGE_TOKEN in your shell environment (do not commit it).
 //   3. Run `./gradlew publishCurseForge` to upload the latest jar as a new release.
+def cfToken = System.getenv('CURSEFORGE_TOKEN') ?: ''
+def cfProjectId = (project.findProperty('curseforge_project_id') ?: '').toString()
+def cfChangelog = System.getenv('CURSEFORGE_CHANGELOG') ?: "Release ${mod_version}.".toString()
+
 tasks.register('publishCurseForge', net.darkhax.curseforgegradle.TaskPublishCurseForge) {
     group = 'publishing'
     description = 'Uploads the built mod jar to CurseForge as a new release.'
 
-    apiToken = providers.environmentVariable('CURSEFORGE_TOKEN').getOrElse('')
-    def projectId = providers.gradleProperty('curseforge_project_id').getOrElse('')
+    apiToken = cfToken
 
     onlyIf {
-        if (apiToken.isEmpty()) {
+        if (cfToken.isEmpty()) {
             logger.warn('CurseForge upload skipped: CURSEFORGE_TOKEN env var not set.')
             return false
         }
-        if (projectId.isEmpty()) {
+        if (cfProjectId.isEmpty()) {
             logger.warn('CurseForge upload skipped: `curseforge_project_id` not set in gradle.properties.')
             return false
         }
         true
     }
 
-    if (!projectId.isEmpty()) {
-        def mainFile = upload(projectId, tasks.named('jar'))
+    if (!cfProjectId.isEmpty()) {
+        def mainFile = upload(cfProjectId, tasks.named('jar'))
         mainFile.releaseType = 'release'
         mainFile.changelogType = 'markdown'
-        mainFile.changelog = providers.environmentVariable('CURSEFORGE_CHANGELOG')
-                .getOrElse("Release ${mod_version}.")
+        mainFile.changelog = cfChangelog
         mainFile.addGameVersion("${minecraft_version}")
         mainFile.addModLoader('NeoForge')
         mainFile.addJavaVersion('Java 21')
