@@ -1,6 +1,6 @@
-# Ping Mod
+# Spotter
 
-A CS2-style ping system for Minecraft 1.21.1 (NeoForge). Mark a location, block, item, or mob, and your nearby teammates can see it floating in 3D space with a color-coded label, an animated leader line down to the spot, and a rotating mini hologram of what was pinged.
+A 3D-tracked ping system for Minecraft 1.21.1 (NeoForge). Mark a location, block, item, or mob, and your nearby teammates can see it floating in 3D space with a color-coded label, an animated leader line down to the spot, and a rotating mini hologram of what was pinged.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Minecraft: 1.21.1](https://img.shields.io/badge/Minecraft-1.21.1-62B47A)](https://www.minecraft.net/)
@@ -20,7 +20,7 @@ A CS2-style ping system for Minecraft 1.21.1 (NeoForge). Mark a location, block,
 
 ## Settings
 
-Open the in-game config screen with **U** (rebindable) or via Mods → Ping Mod → Config. The screen is fully scrollable and includes a live preview that updates as you change settings.
+Open the in-game config screen with **U** (rebindable) or via Mods → Spotter → Config. The screen is fully scrollable and includes a live preview that updates as you change settings.
 
 - **Color** — RGB sliders + hex preview.
 - **Display** — toggle the leader line; choose hologram position (None / Above / Left / Right); text-scale slider (0.5×–2.5×); hostile-mob indicator toggle.
@@ -29,7 +29,7 @@ Open the in-game config screen with **U** (rebindable) or via Mods → Ping Mod 
 
 ## Server Settings
 
-Server administrators can tune the gameplay limits in `<world>/serverconfig/pingmod-server.toml`:
+Server administrators can tune the gameplay limits in `<world>/serverconfig/spotter-server.toml`:
 
 - `max_ping_distance` (16–4096, default 256) — block-distance cap from the pinger's eye to the ping target.
 - `broadcast_radius_chunks` (-1 to 64, default -1) — chunk radius to broadcast to, or `-1` to use the server view distance.
@@ -38,14 +38,14 @@ Server administrators can tune the gameplay limits in `<world>/serverconfig/ping
 ## Installation
 
 1. Install [NeoForge 21.1.176+](https://neoforged.net/) for Minecraft 1.21.1.
-2. Drop `pingmod-<version>.jar` into your `mods/` folder.
+2. Drop `spotter-<version>.jar` into your `mods/` folder.
 3. (Optional) Drop the same jar on the server's `mods/` folder so pings broadcast to all nearby players. Without it on the server, the mod still works in client-only mode.
 
 ## Building from source
 
 ```bash
-git clone https://github.com/Camyana/pingmod.git
-cd pingmod
+git clone https://github.com/Camyana/spotter.git
+cd spotter
 ./gradlew build
 ```
 
